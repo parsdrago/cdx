@@ -4,7 +4,7 @@ if "%1"=="" goto usage
 if "%1"=="-l" goto list
 if "%1"=="-a" goto add
 
-for /f "tokens=1,2 delims=?" %%a in (setting.txt) do (
+for /f "tokens=1,2 delims=?" %%a in (%~dp0%setting.txt) do (
   if %%a==%1 (
     cd %%b
     exit /b
@@ -28,17 +28,20 @@ echo:
 exit /b
 
 :list
-for /f "tokens=1,2 delims=?" %%a in (setting.txt) do (
+for /f "tokens=1,2 delims=?" %%a in (%~dp0%setting.txt) do (
   echo %%a  %%b
 )
 exit /b
 
 :add
-for /f "tokens=1 delims=?" %%a in (setting.txt) do (
-  if %%a==%2 (
-    echo %2 already exists.
-    exit /b
+if exist %~dp0%setting.txt (
+  for /f "tokens=1 delims=?" %%a in (%~dp0%setting.txt) do (
+    if %%a==%2 (
+      echo %2 already exists.
+      exit /b
+    )
   )
 )
 echo %2?%3 >> setting.txt
+echo %2?%3 >> %~dp0%setting.txt
 exit /b
