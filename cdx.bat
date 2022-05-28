@@ -42,6 +42,13 @@ if exist %~dp0%setting.txt (
     )
   )
 )
-echo %2?%3 >> setting.txt
+if %3=="" (
+  echo No path specified.
+  exit /b
+)
+if %3==. (
+  echo %2?%cd% >> %~dp0%setting.txt
+  exit /b
+)
 echo %2?%3 >> %~dp0%setting.txt
 exit /b
