@@ -1,5 +1,4 @@
 @echo off
-setlocal
 
 if "%1"=="" goto usage
 if "%1"=="-l" goto list
